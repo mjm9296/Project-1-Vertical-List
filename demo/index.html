@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DDD Steps List Demo</title>
+  <script type="module" src="https://unpkg.com/@lrnwebcomponents/d-d-d/d-d-d.js"></script>
+  <script type="module" src="./src/ddd-steps-list.js"></script>
+  <style>
+    body {
+      font-family: var(--ddd-font-primary, Arial, sans-serif);
+      margin: 20px;
+      background-color: var(--ddd-theme-default-bgColor, #f5f5f5);
+      color: var(--ddd-theme-default-bodyColor, #333);
+    }
+    .demo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: var(--ddd-theme-default-headingColor, #222);
+    }
+    .controls, .demo-section, .invalid-example {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 24px;
+      margin: 32px 0;
+    }
+    button {
+      background-color: var(--ddd-theme-default-primaryColor);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <d-d-d></d-d-d>
+    <h1>DDD Steps List Demo</h1>
+
+    <div class="controls">
+      <h2>Controls</h2>
+      <label for="primary-color">Primary Color:</label>
+      <select id="primary-color">
+        <option value="1">Accent 1</option>
+        <option value="2">Accent 2</option>
+        <option value="3">Accent 3</option>
+        <option value="4">Accent 4</option>
+        <option value="5" selected>Accent 5</option>
+        <option value="6">Accent 6</option>
+        <option value="7">Accent 7</option>
+      </select>
+      <button id="add-step">Add Step</button>
+      <button id="remove-step">Remove Last Step</button>
+      <button id="add-invalid">Add Invalid Element</button>
+    </div>
+
+    <div class="demo-section">
+      <h2>Standard Example</h2>
+      <ddd-steps-list id="demo-list" ddd-primary="5">
+        <ddd-steps-list-item title="Choose your enrollment period">
+          <p>You will need to complete this before the Fall 2025 semester...</p>
+          <ul><li>Thing 1</li></ul>
+        </ddd-steps-list-item>
+        <ddd-steps-list-item title="Submit your application">
+          <p>Complete and submit your online application...</p>
+          <ul><li>Step A</li><li>Step B</li></ul>
+        </ddd-steps-list-item>
+        <ddd-steps-list-item title="Pay your application fee">
+          <p>The application fee must be paid before your application is processed...</p>
+          <ul><li>Option 1</li><li>Option 2</li></ul>
+        </ddd-steps-list-item>
+      </ddd-steps-list>
+    </div>
+
+    <div class="invalid-example">
+      <h2>Invalid Child Test</h2>
+      <ddd-steps-list id="invalid-test" ddd-primary="7">
+        <ddd-steps-list-item title="Valid Step">
+          <p>This is a valid step item.</p>
+        </ddd-steps-list-item>
+      </ddd-steps-list>
+      <button id="test-invalid">Test Invalid Child</button>
+    </div>
+  </div>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const demoList = document.getElementById('demo-list');
+      const primaryColor = document.getElementById('primary-color');
+      document.getElementById('add-step').addEventListener('click', () => {
+        const step = document.createElement('ddd-steps-list-item');
+        step.title = `New Step`;
+        step.innerHTML = '<p>Dynamic content...</p>';
+        demoList.appendChild(step);
+      });
+      document.getElementById('remove-step').addEventListener('click', () => {
+        demoList.lastElementChild?.remove();
+      });
+      document.getElementById('add-invalid').addEventListener('click', () => {
+        const div = document.createElement('div');
+        div.textContent = 'Invalid child';
+        demoList.appendChild(div);
+      });
+      primaryColor.addEventListener('change', e => {
+        demoList.setAttribute('ddd-primary', e.target.value);
+      });
+      document.getElementById('test-invalid').addEventListener('click', () => {
+        const h2 = document.createElement('h2');
+        h2.textContent = 'Invalid';
+        document.getElementById('invalid-test').appendChild(h2);
+      });
+    });
+  </script>
+</body>
+</html>
