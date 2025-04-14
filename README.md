@@ -26,7 +26,7 @@ A vertical steps list web component
 4. Open your browser to the provided local address
 
 ## Live Demo
-[Insert Vercel Deployment Link Here]
+(https://project-1-vertical-list.vercel.app/)
 
 ## Built With
 - [Lit](https://lit.dev/)
